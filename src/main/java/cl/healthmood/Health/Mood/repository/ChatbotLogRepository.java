@@ -23,7 +23,6 @@ public interface ChatbotLogRepository extends JpaRepository<ChatbotLog, Integer>
     @Query("SELECT COUNT(cl) FROM ChatbotLog cl WHERE cl.customer.customerId = :customerId")
     Long countLogsByCustomerId(@Param("customerId") Integer customerId);
 
-    @Query("SELECT COUNT(cl) FROM ChatbotLog cl WHERE DATE(cl.timestamp) = CURRENT_DATE")
-    Long countTodayLogs();
+    Long countByTimestampBetween(LocalDateTime start, LocalDateTime end);
 }
 

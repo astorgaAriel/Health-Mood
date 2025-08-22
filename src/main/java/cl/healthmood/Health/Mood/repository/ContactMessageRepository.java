@@ -27,7 +27,6 @@ public interface ContactMessageRepository extends JpaRepository<ContactMessage, 
     @Query("SELECT cm FROM ContactMessage cm ORDER BY cm.sentAt DESC")
     List<ContactMessage> findAllOrderBySentAtDesc();
 
-    @Query("SELECT COUNT(cm) FROM ContactMessage cm WHERE DATE(cm.sentAt) = CURRENT_DATE")
-    Long countTodayMessages();
+    Long countBySentAtBetween(LocalDateTime start, LocalDateTime end);
 
 }
