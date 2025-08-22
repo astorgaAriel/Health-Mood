@@ -4,4 +4,4 @@ spring:
   application:
     name: health_mood
   profiles:
-    active: local   # Cambia a 'dev' si quieres activar otro entorno
+    active: prod   # Cambia a 'dev' si quieres activar otro entorno
