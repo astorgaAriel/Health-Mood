@@ -4,4 +4,4 @@ spring:
   application:
     name: health_mood
   profiles:
-    active: cloud   # Cambiado a 'cloud' para despliegue en Render
+    active: local   # Cambiado a 'local' para desarrollo, usar 'cloud' para producción
