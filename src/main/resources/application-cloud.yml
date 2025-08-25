@@ -26,6 +26,9 @@ spring:
   sql:
     init:
       mode: always
+      data-locations: classpath:data.sql
+      continue-on-error: true
+      defer-datasource-initialization: true
 
   # Configuración para Render
   profiles:
