@@ -90,12 +90,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // Orígenes permitidos para producción en la nube
-        configuration.addAllowedOrigin("https://health-mood-evmqnv399-ariels-projects-08c7f509.vercel.app");
-        configuration.addAllowedOriginPattern("https://*.vercel.app");
-        configuration.addAllowedOrigin("https://health-mood.onrender.com");
-        configuration.addAllowedOrigin("http://localhost:3000"); // Para desarrollo local del frontend
-        configuration.addAllowedOrigin("http://localhost:5173"); // Para Vite en desarrollo
+        // Permitir todos los orígenes para pruebas (en producción usar dominios específicos)
+        configuration.addAllowedOriginPattern("*");
 
         // Métodos HTTP permitidos
         configuration.addAllowedMethod("GET");
@@ -103,7 +99,6 @@ public class SecurityConfig {
         configuration.addAllowedMethod("PUT");
         configuration.addAllowedMethod("DELETE");
         configuration.addAllowedMethod("OPTIONS");
-        configuration.addAllowedMethod("PATCH");
 
         // Headers permitidos
         configuration.addAllowedHeader("*");
@@ -113,7 +108,6 @@ public class SecurityConfig {
         
         // Headers expuestos
         configuration.addExposedHeader("Authorization");
-        configuration.addExposedHeader("Content-Type");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

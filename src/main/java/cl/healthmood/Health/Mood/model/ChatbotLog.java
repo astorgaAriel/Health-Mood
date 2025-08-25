@@ -31,6 +31,6 @@ public class ChatbotLog {
     @Column(name = "response", columnDefinition = "TEXT")
     private String response;
 
-    @Column(name = "timestamp", columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "timestamp")
     private LocalDateTime timestamp;
 }

@@ -14,30 +14,28 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop  # Recrear tablas en desarrollo
+      ddl-auto: none  # Deshabilitar completamente la generación automática
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
         format_sql: true
-        hbm2ddl:
-          auto: create-drop
 
   sql:
     init:
-      mode: always   # Cargar datos de prueba automáticamente
+      mode: always   # Usar solo nuestros scripts SQL
       data-locations: classpath:data.sql
       schema-locations: classpath:schema.sql
-      continue-on-error: true
+      continue-on-error: false
 
 # Configuración de logging para debug
 logging:
   level:
-    org.springframework.boot.autoconfigure: DEBUG
-    org.springframework.boot.context: DEBUG
-    org.springframework.security: DEBUG
+    org.springframework.boot.autoconfigure: INFO
+    org.springframework.boot.context: INFO
+    org.springframework.security: WARN
     org.hibernate: INFO
-    cl.healthmood: DEBUG
+    cl.healthmood: INFO
 
 app:
   security:
