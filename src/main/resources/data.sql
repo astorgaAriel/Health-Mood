@@ -1,11 +1,9 @@
 -- ===================================================================
--- DATOS DE PRUEBA PARA HEALTH_MOOD - TIENDA DE MASCOTAS
+-- DATOS DE PRUEBA PARA HEALTH_MOOD - TIENDA DE MASCOTAS (PostgreSQL)
 -- ===================================================================
 
-USE health_mood;
-
--- Deshabilitar verificación de claves foráneas temporalmente
-SET foreign_key_checks = 0;
+-- Conectar a la base de datos health_mood
+\c health_mood;
 
 -- ===================================================================
 -- CATEGORÍAS DE PRODUCTOS
@@ -129,7 +127,7 @@ INSERT INTO order_items (pedido_id, product_id, quantity, list_price, discount) 
 
 -- Pedido 4 (Pedro Martínez)
 (4, 7, 1, 42990, 5000),
-(4, 12, 1, 7990, 0),
+(4, 12, 1, 12990, 0),
 
 -- Pedido 5 (Laura Fernández)
 (5, 29, 1, 35990, 0),
@@ -138,14 +136,14 @@ INSERT INTO order_items (pedido_id, product_id, quantity, list_price, discount) 
 
 -- Pedido 6 (María González - pedido anterior)
 (6, 3, 1, 52990, 3000),
-(6, 19, 1, 45990, 2000),
+(6, 19, 1, 4990, 0),
 
 -- Pedido 7 (Carlos Rodríguez - cancelado)
 (7, 4, 1, 29990, 0),
 
 -- Pedido 8 (Ana Silva - pedido anterior)
 (8, 6, 1, 16990, 0),
-(8, 13, 1, 25990, 0);
+(8, 16, 1, 25990, 0);
 
 -- ===================================================================
 -- PAGOS
@@ -154,65 +152,65 @@ INSERT INTO payments (customer_id, pedido_id, payment_date, amount) VALUES
                                                                         (1, 1, '2024-08-01', 69970),  -- 45990 + (8990*2-1000) + 15990
                                                                         (2, 2, '2024-08-03', 62950),  -- 35990-2000 + (3990*3) + 12990
                                                                         (3, 3, '2024-08-15', 41470),  -- 18990 + 5990 + (8990*2-500)
-                                                                        (4, 4, '2024-08-19', 50980),  -- 42990-5000 + 7990
+                                                                        (4, 4, '2024-08-19', 50980),  -- 42990-5000 + 12990
                                                                         (5, 5, '2024-08-10', 70960),  -- 35990 + (6990*2) + 18990-1000
-                                                                        (1, 6, '2024-07-20', 95980),  -- 52990-3000 + 45990-2000
+                                                                        (1, 6, '2024-07-20', 54980),  -- 52990-3000 + 4990
                                                                         (3, 8, '2024-07-30', 42980);  -- 16990 + 25990
 
 -- ===================================================================
 -- IMÁGENES DE PRODUCTOS
 -- ===================================================================
-INSERT INTO img (imgURL, pedido_number, is_primary, products_product_id) VALUES
+INSERT INTO img (imgurl, pedido_number, is_primary, products_product_id) VALUES
 -- Imágenes para alimentos de perros
-('https://www.drpet.cl/2418-large_default/royal-dog-medium-adult-alimento-para-perro.jpg', 1, 'Y', 1),
-('https://www.drpet.cl/2419-medium_default/royal-dog-medium-adult-alimento-para-perro.jpg', 2, 'N', 1),
-('https://www.tusmascotas.cl/wp-content/uploads/2020/10/Pro-Plan-Puppy-Complete.jpg.webp', 1, 'Y', 2),
-('https://www.tusmascotas.cl/wp-content/uploads/2020/10/Pro-Plan-Puppy-Complete-15Kg-%E2%80%93-60x45x10.jpg.webp', 2, 'N', 2),
-('https://www.eukanuba.com/cdn-cgi/image/width=600,height=600,f=auto,quality=90/cl/sites/g/files/fnmzdf6796/files/2025-04/eukanuba-senior-medium-breed-packshot-en-sp.png', 1, 'Y', 3),
-('https://http2.mlstatic.com/D_NQ_NP_2X_939497-MLA84838791279_052025-F.webp', 1, 'Y', 4),
+('https://www.drpet.cl/2418-large_default/royal-dog-medium-adult-alimento-para-perro.jpg', 1, true, 1),
+('https://www.drpet.cl/2419-medium_default/royal-dog-medium-adult-alimento-para-perro.jpg', 2, false, 1),
+('https://www.tusmascotas.cl/wp-content/uploads/2020/10/Pro-Plan-Puppy-Complete.jpg.webp', 1, true, 2),
+('https://www.tusmascotas.cl/wp-content/uploads/2020/10/Pro-Plan-Puppy-Complete-15Kg-%E2%80%93-60x45x10.jpg.webp', 2, false, 2),
+('https://www.eukanuba.com/cdn-cgi/image/width=600,height=600,f=auto,quality=90/cl/sites/g/files/fnmzdf6796/files/2025-04/eukanuba-senior-medium-breed-packshot-en-sp.png', 1, true, 3),
+('https://http2.mlstatic.com/D_NQ_NP_2X_939497-MLA84838791279_052025-F.webp', 1, true, 4),
 
 -- Imágenes para alimentos de gatos
-('https://petdelivery.shop/wp-content/uploads/2025/05/whiskas-carne-10kg-frontal.jpg', 1, 'Y', 5),
-('https://www.tusmascotas.cl/wp-content/uploads/2020/10/royal-canin-kitten-.jpg.webp', 1, 'Y', 6),
-('https://www.tusmascotas.cl/wp-content/uploads/2020/10/Pro-Plan-Sterilized-Cat.jpg.webp', 1, 'Y', 7),
-('https://petdelivery.shop/wp-content/uploads/2025/04/felix-classic-sachet-pollo.jpg', 1, 'Y', 8),
+('https://petdelivery.shop/wp-content/uploads/2025/05/whiskas-carne-10kg-frontal.jpg', 1, true, 5),
+('https://www.tusmascotas.cl/wp-content/uploads/2020/10/royal-canin-kitten-.jpg.webp', 1, true, 6),
+('https://www.tusmascotas.cl/wp-content/uploads/2020/10/Pro-Plan-Sterilized-Cat.jpg.webp', 1, true, 7),
+('https://petdelivery.shop/wp-content/uploads/2025/04/felix-classic-sachet-pollo.jpg', 1, true, 8),
 
 -- Imágenes para juguetes
-('https://cl-cenco-pim-resizer.ecomm.cencosud.com/unsafe/adaptive-fit-in/640x0/filters:quality(75)/prd-cl/product-medias/d7103eeb-7ae4-4c4b-b56b-a98db6dcf283/MK9NGX6UBQ/MK9NGX6UBQ-1/1728496474104-MK9NGX6UBQ-1-1.png', 1, 'Y', 9),
-('https://cl-cenco-pim-resizer.ecomm.cencosud.com/unsafe/adaptive-fit-in/1920x0/prd-cl/product-medias/d7103eeb-7ae4-4c4b-b56b-a98db6dcf283/MK9NGX6UBQ/MK9NGX6UBQ-1/1728496474253-MK9NGX6UBQ-1-2.png', 2, 'N', 9),
-('https://arenaparamascotas.cl/wp-content/uploads/2024/09/Juguete-Raton-con-sonido-para-gatos-2-1024x1024.jpg', 1, 'Y', 10),
-('https://petcity.cl/wp-content/uploads/2025/06/Juguete-Cuerda-Dental-Perro-Stitch-600x600.jpg', 1, 'Y', 11),
-('https://europet.cl/wp-content/uploads/2022/04/catit-senses-digger.jpg', 1, 'Y', 12),
+('https://cl-cenco-pim-resizer.ecomm.cencosud.com/unsafe/adaptive-fit-in/640x0/filters:quality(75)/prd-cl/product-medias/d7103eeb-7ae4-4c4b-b56b-a98db6dcf283/MK9NGX6UBQ/MK9NGX6UBQ-1/1728496474104-MK9NGX6UBQ-1-1.png', 1, true, 9),
+('https://cl-cenco-pim-resizer.ecomm.cencosud.com/unsafe/adaptive-fit-in/1920x0/prd-cl/product-medias/d7103eeb-7ae4-4c4b-b56b-a98db6dcf283/MK9NGX6UBQ/MK9NGX6UBQ-1/1728496474253-MK9NGX6UBQ-1-2.png', 2, false, 9),
+('https://arenaparamascotas.cl/wp-content/uploads/2024/09/Juguete-Raton-con-sonido-para-gatos-2-1024x1024.jpg', 1, true, 10),
+('https://petcity.cl/wp-content/uploads/2025/06/Juguete-Cuerda-Dental-Perro-Stitch-600x600.jpg', 1, true, 11),
+('https://europet.cl/wp-content/uploads/2022/04/catit-senses-digger.jpg', 1, true, 12),
 
 -- Imágenes para accesorios
-('https://www.distribuidoralira.cl/wp-content/uploads/2025/03/blanco.jpg', 1, 'Y', 13),
-('https://www.distribuidoralira.cl/wp-content/uploads/2025/07/seresto-mas-de-8kg-768x768.jpg', 1, 'Y', 14),
-('https://http2.mlstatic.com/D_NQ_NP_2X_950302-MLA83737342629_042025-F.webp', 1, 'Y', 15),
-('https://bestforpets.cl/tienda/18900-large_default/catit-carrier-voyageur-jaula-transportadora.jpg', 1, 'Y', 16),
+('https://www.distribuidoralira.cl/wp-content/uploads/2025/03/blanco.jpg', 1, true, 13),
+('https://www.distribuidoralira.cl/wp-content/uploads/2025/07/seresto-mas-de-8kg-768x768.jpg', 1, true, 14),
+('https://http2.mlstatic.com/D_NQ_NP_2X_950302-MLA83737342629_042025-F.webp', 1, true, 15),
+('https://bestforpets.cl/tienda/18900-large_default/catit-carrier-voyageur-jaula-transportadora.jpg', 1, true, 16),
 
 -- Imágenes para higiene
-('https://www.superzoo.cl/on/demandware.static/-/Sites-SuperZoo-master-catalog/default/dw338357bd/images/540%20.jpg', 1, 'Y', 17),
-('https://andis.cl/wp-content/uploads/2019/03/Deslanador-Ancho-Andis-Green-Line-02.jpg', 1, 'Y', 18),
-('https://http2.mlstatic.com/D_NQ_NP_2X_851039-MLA81204027726_122024-F-toallas-humedas-perrosgatosmascotas-clorhexidina-y-mirra.webp', 1, 'Y', 19),
-('https://www.superzoo.cl/on/demandware.static/-/Sites-SuperZoo-master-catalog/default/dwa1c8d211/images/8464_m.jpg', 1, 'Y', 20),
+('https://www.superzoo.cl/on/demandware.static/-/Sites-SuperZoo-master-catalog/default/dw338357bd/images/540%20.jpg', 1, true, 17),
+('https://andis.cl/wp-content/uploads/2019/03/Deslanador-Ancho-Andis-Green-Line-02.jpg', 1, true, 18),
+('https://http2.mlstatic.com/D_NQ_NP_2X_851039-MLA81204027726_122024-F-toallas-humedas-perrosgatosmascotas-clorhexidina-y-mirra.webp', 1, true, 19),
+('https://www.superzoo.cl/on/demandware.static/-/Sites-SuperZoo-master-catalog/default/dwa1c8d211/images/8464_m.jpg', 1, true, 20),
 
 -- Imágenes para medicamentos
-('https://www.clubdeperrosygatos.cl/wp-content/uploads/2025/02/Nexgard-para-Perros-101-a-25-Kg-1-Dosis-Masticable.webp', 1, 'Y', 21),
-('https://www.clubdeperrosygatos.cl/wp-content/uploads/2018/10/SUPERPET-OMEGA-PERRO-ADULTO.webp', 1, 'Y', 22),
-('https://centralvet03.akamaized.net/27395/probio-pasta-60-ml-probiotico-prebiotico-para-mascotas-mervue.jpg', 1, 'Y', 23),
-('https://www.tusmascotas.cl/wp-content/uploads/2021/03/doguivit-senior.jpg', 1, 'Y', 24),
+('https://www.clubdeperrosygatos.cl/wp-content/uploads/2025/02/Nexgard-para-Perros-101-a-25-Kg-1-Dosis-Masticable.webp', 1, true, 21),
+('https://www.clubdeperrosygatos.cl/wp-content/uploads/2018/10/SUPERPET-OMEGA-PERRO-ADULTO.webp', 1, true, 22),
+('https://centralvet03.akamaized.net/27395/probio-pasta-60-ml-probiotico-prebiotico-para-mascotas-mervue.jpg', 1, true, 23),
+('https://www.tusmascotas.cl/wp-content/uploads/2021/03/doguivit-senior.jpg', 1, true, 24),
 
 -- Imágenes para snacks
-('https://zalavet.com/cdn/shop/products/hueso_prensado_piel_de_vacuno_87e99f86-d0bd-40b7-a23a-b1998503d307.jpg?v=1618584987', 1, 'Y', 25),
-('https://arcadenoe.com.gt/cdn/shop/products/ADN800X800-2022-08-09T181000.908_700x.png?v=1660079405', 1, 'Y', 26),
-('https://d23qt3x1ychzdy.cloudfront.net/dev_images_products/3cc07f14a908b99174f0de6761a5da75_1704299953.jpg', 1, 'Y', 27),
-('https://arquivet.com/305-large_default/dental-sticks-28-unidades.jpg', 1, 'Y', 28),
+('https://zalavet.com/cdn/shop/products/hueso_prensado_piel_de_vacuno_87e99f86-d0bd-40b7-a23a-b1998503d307.jpg?v=1618584987', 1, true, 25),
+('https://arcadenoe.com.gt/cdn/shop/products/ADN800X800-2022-08-09T181000.908_700x.png?v=1660079405', 1, true, 26),
+('https://d23qt3x1ychzdy.cloudfront.net/dev_images_products/3cc07f14a908b99174f0de6761a5da75_1704299953.jpg', 1, true, 27),
+('https://arquivet.com/305-large_default/dental-sticks-28-unidades.jpg', 1, true, 28),
 
 -- Imágenes para acuarios
-('https://olacuario.es/2456-large_default/aqua-20-led.jpg', 1, 'Y', 29),
-('https://www.aquamania.cl/3885-large_default/porpoise-cichlid-food-120-g.jpg', 1, 'Y', 30),
-('https://faunasalud.cl/wp-content/uploads/2020/12/2-7.jpg', 1, 'Y', 31),
-('https://http2.mlstatic.com/D_NQ_NP_2X_624413-MLC82656035361_022025-F-adorno-acuario-castillo-fantasia-premium-accesorio-pecera.webp', 1, 'Y', 32);
+('https://olacuario.es/2456-large_default/aqua-20-led.jpg', 1, true, 29),
+('https://www.aquamania.cl/3885-large_default/porpoise-cichlid-food-120-g.jpg', 1, true, 30),
+('https://faunasalud.cl/wp-content/uploads/2020/12/2-7.jpg', 1, true, 31),
+('https://http2.mlstatic.com/D_NQ_NP_2X_624413-MLC82656035361_022025-F-adorno-acuario-castillo-fantasia-premium-accesorio-pecera.webp', 1, true, 32);
 
 -- ===================================================================
 -- CARRITO DE COMPRAS (ALGUNOS ITEMS PENDIENTES)
@@ -266,58 +264,102 @@ INSERT INTO chatbot_logs (customer_id, message, response, timestamp) VALUES
                                                                          (4, '¿Cada cuánto debo bañar a mi perro?', 'La frecuencia del baño depende del tipo de pelo y estilo de vida de tu perro. En general, cada 4-6 semanas es suficiente para la mayoría de los perros. Si tu perro pasa mucho tiempo al aire libre o tiene piel sensible, podría necesitar baños más o menos frecuentes. Usa siempre shampoo específico para perros.', '2024-08-19 11:45:00'),
                                                                          (5, 'Quiero montar un acuario pequeño, ¿qué necesito?', 'Para un acuario pequeño necesitarás: una pecera de al menos 20 litros, un filtro interno, un calentador (si planeas tener peces tropicales), grava o sustrato, decoraciones, y por supuesto, peces compatibles. Te recomiendo comenzar con peces resistentes como guppies o bettas.', '2024-08-10 14:20:00');
 
--- Rehabilitar verificación de claves foráneas
-SET foreign_key_checks = 1;
-
 -- ===================================================================
 -- VERIFICACIÓN DE DATOS INSERTADOS
 -- ===================================================================
-SELECT 'Datos de prueba insertados exitosamente' as Status;
 
-SELECT
-    'categories' as tabla, COUNT(*) as registros FROM categories
-UNION ALL SELECT
-              'customers', COUNT(*) FROM customers
-UNION ALL SELECT
-              'posts', COUNT(*) FROM posts
-UNION ALL SELECT
-              'products', COUNT(*) FROM products
-UNION ALL SELECT
-              'pedidos', COUNT(*) FROM pedidos
-UNION ALL SELECT
-              'order_items', COUNT(*) FROM order_items
-UNION ALL SELECT
-              'payments', COUNT(*) FROM payments
-UNION ALL SELECT
-              'img', COUNT(*) FROM img
-UNION ALL SELECT
-              'cart_items', COUNT(*) FROM cart_items
-UNION ALL SELECT
-              'comments', COUNT(*) FROM comments
-UNION ALL SELECT
-              'contact_messages', COUNT(*) FROM contact_messages
-UNION ALL SELECT
-              'chatbot_logs', COUNT(*) FROM chatbot_logs;
+-- Mensaje de confirmación
+SELECT 'Datos de prueba insertados exitosamente' as status;
+
+-- Conteo de registros por tabla
+SELECT 'categories' as tabla, COUNT(*) as registros FROM categories
+UNION ALL
+SELECT 'customers', COUNT(*) FROM customers
+UNION ALL
+SELECT 'posts', COUNT(*) FROM posts
+UNION ALL
+SELECT 'products', COUNT(*) FROM products
+UNION ALL
+SELECT 'pedidos', COUNT(*) FROM pedidos
+UNION ALL
+SELECT 'order_items', COUNT(*) FROM order_items
+UNION ALL
+SELECT 'payments', COUNT(*) FROM payments
+UNION ALL
+SELECT 'img', COUNT(*) FROM img
+UNION ALL
+SELECT 'cart_items', COUNT(*) FROM cart_items
+UNION ALL
+SELECT 'comments', COUNT(*) FROM comments
+UNION ALL
+SELECT 'contact_messages', COUNT(*) FROM contact_messages
+UNION ALL
+SELECT 'chatbot_logs', COUNT(*) FROM chatbot_logs
+ORDER BY tabla;
 
 -- ===================================================================
 -- CONSULTAS DE VERIFICACIÓN ÚTILES
 -- ===================================================================
 
 -- Ver resumen de ventas por cliente
--- SELECT CONCAT(c.first_name, ' ', c.last_name) as cliente, COUNT(p.pedido_id) as pedidos, SUM(pay.amount) as total_gastado
--- FROM customers c
--- LEFT JOIN pedidos p ON c.customer_id = p.customer_id
--- LEFT JOIN payments pay ON p.pedido_id = pay.pedido_id
--- WHERE c.rol = 'cliente'
--- GROUP BY c.customer_id
--- ORDER BY total_gastado DESC;
+/*
+SELECT CONCAT(c.first_name, ' ', c.last_name) as cliente,
+       COUNT(p.pedido_id) as pedidos,
+       COALESCE(SUM(pay.amount), 0) as total_gastado
+FROM customers c
+LEFT JOIN pedidos p ON c.customer_id = p.customer_id
+LEFT JOIN payments pay ON p.pedido_id = pay.pedido_id
+WHERE c.rol = 'cliente'
+GROUP BY c.customer_id, c.first_name, c.last_name
+ORDER BY total_gastado DESC;
+*/
 
 -- Ver productos más vendidos
--- SELECT pr.name, SUM(oi.quantity) as cantidad_vendida, SUM(oi.quantity * (oi.list_price - oi.discount)) as ingresos
--- FROM products pr
--- JOIN order_items oi ON pr.product_id = oi.product_id
--- JOIN pedidos pe ON oi.pedido_id = pe.pedido_id
--- WHERE pe.pedido_status != 'Cancelado'
--- GROUP BY pr.product_id
--- ORDER BY cantidad_vendida DESC
--- LIMIT 10;
+/*
+SELECT pr.name,
+       SUM(oi.quantity) as cantidad_vendida,
+       SUM(oi.quantity * (oi.list_price - oi.discount)) as ingresos
+FROM products pr
+JOIN order_items oi ON pr.product_id = oi.product_id
+JOIN pedidos pe ON oi.pedido_id = pe.pedido_id
+WHERE pe.pedido_status != 'Cancelado'
+GROUP BY pr.product_id, pr.name
+ORDER BY cantidad_vendida DESC
+LIMIT 10;
+*/
+
+-- Ver estado de pedidos
+/*
+SELECT pedido_status,
+       COUNT(*) as cantidad_pedidos,
+       ROUND(AVG(amount), 2) as promedio_valor
+FROM pedidos p
+JOIN payments pay ON p.pedido_id = pay.pedido_id
+GROUP BY pedido_status
+ORDER BY cantidad_pedidos DESC;
+*/
+
+-- Ver categorías más populares
+/*
+SELECT c.name as categoria,
+       COUNT(oi.product_id) as productos_vendidos,
+       SUM(oi.quantity) as cantidad_total_vendida
+FROM categories c
+JOIN products p ON c.category_id = p.category_id
+JOIN order_items oi ON p.product_id = oi.product_id
+JOIN pedidos pe ON oi.pedido_id = pe.pedido_id
+WHERE pe.pedido_status != 'Cancelado'
+GROUP BY c.category_id, c.name
+ORDER BY cantidad_total_vendida DESC;
+*/
+
+-- Ver actividad del blog
+/*
+SELECT p.title,
+       p.published_date,
+       COUNT(c.comment_id) as comentarios
+FROM posts p
+LEFT JOIN comments c ON p.post_id = c.post_id
+GROUP BY p.post_id, p.title, p.published_date
+ORDER BY p.published_date DESC;
+*/
