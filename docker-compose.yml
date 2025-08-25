@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: health_mood_postgres
+    environment:
+      POSTGRES_DB: health_mood
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: health_mood_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./src/main/resources/data.sql:/docker-entrypoint-initdb.d/02-data.sql
+    networks:
+      - health_mood_network
+
+  # Aplicación Spring Boot
+  app:
+    build: .
+    container_name: health_mood_app
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/health_mood
+      DB_USERNAME: postgres
+      DB_PASSWORD: health_mood_password
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - health_mood_network
+
+volumes:
+  postgres_data:
+
+networks:
+  health_mood_network:
+    driver: bridge

@@ -4,4 +4,4 @@ spring:
   application:
     name: health_mood
   profiles:
-    active: prod   # Cambia a 'dev' si quieres activar otro entorno
+    active: cloud   # Cambiado a 'cloud' para despliegue en Render

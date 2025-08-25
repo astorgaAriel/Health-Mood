@@ -1,0 +1,65 @@
+# Configuración para despliegue en la nube
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 300000
+      connection-timeout: 30000
+      leak-detection-threshold: 60000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          time_zone: UTC
+
+  sql:
+    init:
+      mode: never
+
+  # Configuración para Render
+  profiles:
+    include: cloud
+
+# Configuración de CORS para el frontend en Vercel
+app:
+  security:
+    cors:
+      dev: false
+      allowed-origins:
+        - https://health-mood-evmqnv399-ariels-projects-08c7f509.vercel.app
+        - https://*.vercel.app
+        - https://health-mood.onrender.com
+
+# Configuración del servidor para Render
+server:
+  port: ${PORT:8080}
+
+# Configuración de Actuator para health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# Logging optimizado para producción
+logging:
+  level:
+    root: INFO
+    cl.healthmood: INFO
+    org.springframework.security: WARN
+    org.hibernate: WARN
