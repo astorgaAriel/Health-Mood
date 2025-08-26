@@ -2,8 +2,7 @@
 -- DATOS DE PRUEBA PARA HEALTH_MOOD - TIENDA DE MASCOTAS (PostgreSQL)
 -- ===================================================================
 
--- Conectar a la base de datos health_mood
-\c health_mood;
+
 
 -- ===================================================================
 -- CATEGORÍAS DE PRODUCTOS
