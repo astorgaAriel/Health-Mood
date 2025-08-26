@@ -13,7 +13,7 @@ spring:
     properties:
       hibernate:
       
-   sql:
+  sql:
     init:
       mode: always   # Usar solo nuestros scripts SQL
       data-locations: classpath:data.sql
