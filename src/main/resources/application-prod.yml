@@ -12,6 +12,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
+      format_sql: false
       
   sql:
     init:
@@ -19,7 +20,7 @@ spring:
       data-locations: classpath:data.sql
       schema-locations: classpath:schema.sql
       continue-on-error: false     
-      format_sql: false
+      
   
 
 app:
