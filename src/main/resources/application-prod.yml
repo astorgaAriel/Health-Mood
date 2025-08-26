@@ -16,7 +16,7 @@ spring:
       
   sql:
     init:
-      mode: always   # Usar solo nuestros scripts SQL
+      mode: never   # Usar solo nuestros scripts SQL
       data-locations: classpath:data.sql
       schema-locations: classpath:schema.sql
       continue-on-error: false     
