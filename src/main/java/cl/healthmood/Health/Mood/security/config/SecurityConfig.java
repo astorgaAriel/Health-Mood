@@ -88,29 +88,28 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        
-        // Permitir todos los orígenes para pruebas (en producción usar dominios específicos)
-        configuration.addAllowedOriginPattern("*");
+    CorsConfiguration configuration = new CorsConfiguration();
+    // Permitir solo el origen del frontend en producción
+    configuration.addAllowedOrigin("https://health-mood.vercel.app");
 
-        // Métodos HTTP permitidos
-        configuration.addAllowedMethod("GET");
-        configuration.addAllowedMethod("POST");
-        configuration.addAllowedMethod("PUT");
-        configuration.addAllowedMethod("DELETE");
-        configuration.addAllowedMethod("OPTIONS");
+    // Métodos HTTP permitidos
+    configuration.addAllowedMethod("GET");
+    configuration.addAllowedMethod("POST");
+    configuration.addAllowedMethod("PUT");
+    configuration.addAllowedMethod("DELETE");
+    configuration.addAllowedMethod("OPTIONS");
 
-        // Headers permitidos
-        configuration.addAllowedHeader("*");
-        
-        // Permitir credenciales
-        configuration.setAllowCredentials(true);
-        
-        // Headers expuestos
-        configuration.addExposedHeader("Authorization");
+    // Headers permitidos
+    configuration.addAllowedHeader("*");
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    // Permitir credenciales
+    configuration.setAllowCredentials(true);
+
+    // Headers expuestos
+    configuration.addExposedHeader("Authorization");
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
     }
 }
