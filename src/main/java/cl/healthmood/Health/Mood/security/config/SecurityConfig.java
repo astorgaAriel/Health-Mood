@@ -88,28 +88,37 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    // Permitir solo el origen del frontend en producción
-    configuration.addAllowedOrigin("https://health-mood.vercel.app");
+        CorsConfiguration configuration = new CorsConfiguration();
 
-    // Métodos HTTP permitidos
-    configuration.addAllowedMethod("GET");
-    configuration.addAllowedMethod("POST");
-    configuration.addAllowedMethod("PUT");
-    configuration.addAllowedMethod("DELETE");
-    configuration.addAllowedMethod("OPTIONS");
+        // Permitir orígenes específicos
+        configuration.addAllowedOriginPattern("https://health-mood.vercel.app");
+        configuration.addAllowedOriginPattern("https://*.health-mood.vercel.app"); // Para preview deployments
 
-    // Headers permitidos
-    configuration.addAllowedHeader("*");
 
-    // Permitir credenciales
-    configuration.setAllowCredentials(true);
+        // Métodos HTTP permitidos
+        configuration.addAllowedMethod("GET");
+        configuration.addAllowedMethod("POST");
+        configuration.addAllowedMethod("PUT");
+        configuration.addAllowedMethod("DELETE");
+        configuration.addAllowedMethod("OPTIONS");
+        configuration.addAllowedMethod("PATCH");
 
-    // Headers expuestos
-    configuration.addExposedHeader("Authorization");
+        // Headers permitidos
+        configuration.addAllowedHeader("*");
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
+        // Permitir credenciales
+        configuration.setAllowCredentials(true);
+
+        // Headers expuestos al frontend
+        configuration.addExposedHeader("Authorization");
+        configuration.addExposedHeader("Content-Type");
+        configuration.addExposedHeader("X-Requested-With");
+
+        // Configurar el tiempo de cache para preflight requests
+        configuration.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
